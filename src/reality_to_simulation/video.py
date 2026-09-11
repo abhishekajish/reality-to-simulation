@@ -35,3 +35,9 @@ def read_frames(capture):
             break
 
         yield frame
+
+def save_frame(frame, output_path: str):
+    success = cv2.imwrite(output_path, frame)
+
+    if not success:
+        raise ValueError(f"Could not save frame to: {output_path}")

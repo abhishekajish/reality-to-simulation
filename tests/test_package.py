@@ -4,7 +4,8 @@ from reality_to_simulation.video import (
     get_video_metadata,
     open_video,
     read_first_frame,
-    read_frames
+    read_frames,
+    save_frame,
 )
 
 
@@ -56,5 +57,19 @@ def test_read_frames():
     assert len(frames) == 251
     assert frames[0].shape == (720, 1280, 3)
     assert frames[-1].shape == (720, 1280, 3)
+
+    capture.release()
+
+def test_save_frame(tmp_path):
+    capture = open_video(str(VIDEO_PATH))
+
+    frame = read_first_frame(capture)
+
+    output_path = tmp_path / "test_frame.jpg"
+
+    save_frame(frame, str(output_path))
+
+    assert output_path.exists()
+    assert output_path.stat().st_size > 0
 
     capture.release()
