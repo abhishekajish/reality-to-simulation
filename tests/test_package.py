@@ -1,5 +1,6 @@
 from pathlib import Path
 
+from reality_to_simulation.detector import VehicleDetector
 from reality_to_simulation.video import (
     get_video_metadata,
     open_video,
@@ -7,7 +8,7 @@ from reality_to_simulation.video import (
     read_frames,
     save_frame,
 )
-from reality_to_simulation.detector import VehicleDetector
+
 
 VIDEO_PATH = Path("data/raw/videos/traffic_demo.mp4")
 
@@ -49,6 +50,7 @@ def test_video_metadata():
 
     capture.release()
 
+
 def test_read_frames():
     capture = open_video(str(VIDEO_PATH))
 
@@ -59,6 +61,7 @@ def test_read_frames():
     assert frames[-1].shape == (720, 1280, 3)
 
     capture.release()
+
 
 def test_save_frame(tmp_path):
     capture = open_video(str(VIDEO_PATH))
@@ -73,6 +76,7 @@ def test_save_frame(tmp_path):
     assert output_path.stat().st_size > 0
 
     capture.release()
+
 
 def test_vehicle_detector():
     detector = VehicleDetector()
@@ -93,7 +97,7 @@ def test_vehicle_detector():
         }
 
         assert 0.0 <= detection["confidence"] <= 1.0
-
         assert len(detection["bbox"]) == 4
+        assert len(detection["center"]) == 2
 
     capture.release()

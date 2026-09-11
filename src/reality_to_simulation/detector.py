@@ -28,11 +28,15 @@ class VehicleDetector:
 
             x1, y1, x2, y2 = box.xyxy[0].tolist()
 
+            center_x = (x1 + x2) / 2
+            center_y = (y1 + y2) / 2
+
             detections.append(
                 {
                     "class_name": class_name,
                     "confidence": confidence,
                     "bbox": [x1, y1, x2, y2],
+                    "center": [center_x, center_y],
                 }
             )
 
