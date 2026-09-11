@@ -1,6 +1,7 @@
 from pathlib import Path
 
 from reality_to_simulation.detector import VehicleDetector
+from reality_to_simulation.trajectory import TrajectoryStore
 from reality_to_simulation.video import (
     get_video_metadata,
     open_video,
@@ -101,3 +102,42 @@ def test_vehicle_detector():
         assert len(detection["center"]) == 2
 
     capture.release()
+
+
+def test_trajectory_store():
+    store = TrajectoryStore()
+
+    tracks = [
+        {
+            "track_id": 1,
+            "class_name": "car",
+            "confidence": 0.9,
+            "bbox": [100, 200, 140, 240],
+            "center": [120, 220],
+        }
+    ]
+
+    store.add_tracks(frame_id=1, tracks=tracks)
+    store.add_tracks(
+        frame_id=2,
+        tracks=[
+            {
+                "track_id": 1,
+                "class_name": "car",
+                "confidence": 0.92,
+                "bbox": [110, 205, 150, 245],
+                "center": [130, 225],
+            }
+        ],
+    )
+
+    trajectory = store.get_trajectory(1)
+
+    assert len(trajectory) == 2
+    assert trajectory[0]["frame_id"] == 1
+    assert trajectory[0]["x"] == 120
+    assert trajectory[0]["y"] == 220
+    assert trajectory[1]["frame_id"] == 2
+    assert trajectory[1]["x"] == 130
+    assert trajectory[1]["y"] == 225
+    assert store.get_track_count() == 1

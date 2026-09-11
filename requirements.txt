@@ -2,3 +2,7 @@ numpy
 pandas
 pytest
 pyyaml
+opencv-python
+ultralytics
+lap
+matplotlib
