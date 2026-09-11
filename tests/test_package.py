@@ -7,7 +7,7 @@ from reality_to_simulation.video import (
     read_frames,
     save_frame,
 )
-
+from reality_to_simulation.detector import VehicleDetector
 
 VIDEO_PATH = Path("data/raw/videos/traffic_demo.mp4")
 
@@ -71,5 +71,29 @@ def test_save_frame(tmp_path):
 
     assert output_path.exists()
     assert output_path.stat().st_size > 0
+
+    capture.release()
+
+def test_vehicle_detector():
+    detector = VehicleDetector()
+
+    capture = open_video(str(VIDEO_PATH))
+    frame = read_first_frame(capture)
+
+    detections = detector.detect(frame)
+
+    assert len(detections) > 0
+
+    for detection in detections:
+        assert detection["class_name"] in {
+            "car",
+            "truck",
+            "bus",
+            "motorcycle",
+        }
+
+        assert 0.0 <= detection["confidence"] <= 1.0
+
+        assert len(detection["bbox"]) == 4
 
     capture.release()
