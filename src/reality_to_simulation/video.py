@@ -26,3 +26,12 @@ def get_video_metadata(capture):
         "fps": capture.get(cv2.CAP_PROP_FPS),
         "frame_count": int(capture.get(cv2.CAP_PROP_FRAME_COUNT)),
     }
+
+def read_frames(capture):
+    while True:
+        success, frame = capture.read()
+
+        if not success:
+            break
+
+        yield frame

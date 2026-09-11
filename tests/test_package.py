@@ -4,6 +4,7 @@ from reality_to_simulation.video import (
     get_video_metadata,
     open_video,
     read_first_frame,
+    read_frames
 )
 
 
@@ -44,5 +45,16 @@ def test_video_metadata():
     assert metadata["height"] == 720
     assert metadata["fps"] == 30.0
     assert metadata["frame_count"] == 251
+
+    capture.release()
+
+def test_read_frames():
+    capture = open_video(str(VIDEO_PATH))
+
+    frames = list(read_frames(capture))
+
+    assert len(frames) == 251
+    assert frames[0].shape == (720, 1280, 3)
+    assert frames[-1].shape == (720, 1280, 3)
 
     capture.release()
