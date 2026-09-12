@@ -1,94 +1,42 @@
-\# REALITY → SIMULATION
+# 🚦 Reality → Simulation
 
+## AI-Powered Real-World Traffic Digital Twin
 
+**Reality → Perception → Understanding → Prediction → Simulation → Optimization**
 
-\## AI-Powered Real-World Traffic Digital Twin
+Reality → Simulation is an end-to-end AI and traffic simulation project that transforms real-world traffic video into structured vehicle trajectories, learns vehicle motion patterns, evaluates interaction-aware prediction models, reconstructs a microscopic traffic simulation in SUMO, and evaluates counterfactual traffic-signal interventions.
 
+The project combines **Computer Vision, Multi-Object Tracking, Time-Series Deep Learning, Graph Neural Networks, Microscopic Traffic Simulation, and Optimization** into a single reproducible pipeline.
 
+---
 
-REALITY → SIMULATION is an end-to-end machine learning and simulation project that aims to transform real-world traffic video into a calibrated microscopic traffic digital twin.
+## 🎯 Project Objective
 
+Traditional traffic analysis is often limited to observing what has already happened.
 
+This project explores a different question:
 
-The system will progressively combine:
+> **Can real-world traffic observations be transformed into a digital twin that can predict vehicle behavior and evaluate what might happen under alternative traffic-control strategies?**
 
-
-
-\- Computer Vision
-
-\- Object Detection
-
-\- Multi-Object Tracking
-
-\- Vehicle Trajectory Extraction
-
-\- Spatiotemporal Machine Learning
-
-\- Graph Neural Networks
-
-\- Trajectory Prediction
-
-\- Microscopic Traffic Simulation
-
-\- Digital Twin Calibration
-
-\- Counterfactual Simulation
-
-\- Optimization
-
-\- Reinforcement Learning
-
-
-
-\## Core Pipeline
-
-
+The system therefore follows the pipeline:
 
 ```text
-
 Real-World Traffic Video
-
-&#x20;       ↓
-
-Object Detection
-
-&#x20;       ↓
-
+          ↓
+Vehicle Detection
+          ↓
 Multi-Object Tracking
-
-&#x20;       ↓
-
-Trajectory Extraction
-
-&#x20;       ↓
-
-Traffic Scene Understanding
-
-&#x20;       ↓
-
-Spatiotemporal Modeling
-
-&#x20;       ↓
-
+          ↓
+Vehicle Trajectories
+          ↓
+Motion Feature Extraction
+          ↓
 Trajectory Prediction
-
-&#x20;       ↓
-
+          ↓
+Interaction Modeling
+          ↓
 SUMO Digital Twin
-
-&#x20;       ↓
-
-Calibration
-
-&#x20;       ↓
-
+          ↓
 Counterfactual Simulation
-
-&#x20;       ↓
-
-Optimization
-
-&#x20;       ↓
-
-Reinforcement Learning
-
+          ↓
+Signal Optimization
