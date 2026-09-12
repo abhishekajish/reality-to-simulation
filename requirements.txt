@@ -7,3 +7,5 @@ ultralytics
 lap
 matplotlib
 torch-geometric
+streamlit
+imageio-ffmpeg

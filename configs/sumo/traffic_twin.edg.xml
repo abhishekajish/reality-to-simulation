@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<edges>
+
+    <edge
+        id="road_in"
+        from="start"
+        to="junction"
+        numLanes="2"
+        speed="13.89"
+    />
+
+    <edge
+        id="road_out"
+        from="junction"
+        to="end"
+        numLanes="2"
+        speed="13.89"
+    />
+
+</edges>

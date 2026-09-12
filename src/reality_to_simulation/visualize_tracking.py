@@ -7,8 +7,13 @@ from reality_to_simulation.tracker import VehicleTracker
 from reality_to_simulation.video import open_video
 
 
-VIDEO_PATH = Path("data/raw/videos/traffic_demo.mp4")
-OUTPUT_PATH = Path("data/interim/tracking_visualization.mp4")
+VIDEO_PATH = Path(
+    "data/raw/videos/traffic_demo.mp4"
+)
+
+OUTPUT_PATH = Path(
+    "data/interim/tracking_visualization.webm"
+)
 
 
 def draw_tracking_visualization(
@@ -19,14 +24,27 @@ def draw_tracking_visualization(
 
     capture = open_video(video_path)
 
-    width = int(capture.get(cv2.CAP_PROP_FRAME_WIDTH))
-    height = int(capture.get(cv2.CAP_PROP_FRAME_HEIGHT))
-    fps = capture.get(cv2.CAP_PROP_FPS)
+    width = int(
+        capture.get(cv2.CAP_PROP_FRAME_WIDTH)
+    )
+
+    height = int(
+        capture.get(cv2.CAP_PROP_FRAME_HEIGHT)
+    )
+
+    fps = capture.get(
+        cv2.CAP_PROP_FPS
+    )
 
     output_file = Path(output_path)
-    output_file.parent.mkdir(parents=True, exist_ok=True)
+    output_file.parent.mkdir(
+        parents=True,
+        exist_ok=True,
+    )
 
-    fourcc = cv2.VideoWriter_fourcc(*"mp4v")
+    fourcc = cv2.VideoWriter_fourcc(
+        *"VP80"
+    )
 
     writer = cv2.VideoWriter(
         str(output_file),
@@ -37,8 +55,11 @@ def draw_tracking_visualization(
 
     if not writer.isOpened():
         capture.release()
+
         raise ValueError(
-            f"Could not create output video: {output_path}"
+            "Could not create WebM tracking video. "
+            "The installed OpenCV build may not "
+            "contain a WebM encoder."
         )
 
     trajectory_history = defaultdict(list)
@@ -46,6 +67,7 @@ def draw_tracking_visualization(
     frame_id = 0
 
     while True:
+
         success, frame = capture.read()
 
         if not success:
@@ -56,7 +78,9 @@ def draw_tracking_visualization(
         tracks = tracker.track_frame(frame)
 
         for track in tracks:
+
             track_id = track["track_id"]
+
             x1, y1, x2, y2 = map(
                 int,
                 track["bbox"],
@@ -67,13 +91,23 @@ def draw_tracking_visualization(
                 track["center"],
             )
 
-            trajectory_history[track_id].append(
-                (center_x, center_y)
+            trajectory_history[
+                track_id
+            ].append(
+                (
+                    center_x,
+                    center_y,
+                )
             )
 
-            points = trajectory_history[track_id]
+            points = trajectory_history[
+                track_id
+            ]
 
-            for index in range(1, len(points)):
+            for index in range(
+                1,
+                len(points),
+            ):
                 cv2.line(
                     frame,
                     points[index - 1],
@@ -98,7 +132,10 @@ def draw_tracking_visualization(
             cv2.putText(
                 frame,
                 label,
-                (x1, max(y1 - 10, 20)),
+                (
+                    x1,
+                    max(y1 - 10, 20),
+                ),
                 cv2.FONT_HERSHEY_SIMPLEX,
                 0.5,
                 (255, 255, 255),
@@ -127,11 +164,22 @@ def draw_tracking_visualization(
 
 
 if __name__ == "__main__":
+
     results = draw_tracking_visualization(
         str(VIDEO_PATH),
         str(OUTPUT_PATH),
     )
 
-    print("TRACKING VISUALIZATION COMPLETE")
-    print("FRAMES PROCESSED:", results["frames_processed"])
-    print("OUTPUT:", results["output_path"])
+    print(
+        "TRACKING VISUALIZATION COMPLETE"
+    )
+
+    print(
+        "FRAMES PROCESSED:",
+        results["frames_processed"],
+    )
+
+    print(
+        "OUTPUT:",
+        results["output_path"],
+    )

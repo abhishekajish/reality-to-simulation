@@ -1,0 +1,35 @@
+scene:
+  name: traffic_demo
+  coordinate_system: image_pixels
+  image_width: 1280
+  image_height: 720
+
+road:
+  type: straight_intersection
+
+  lanes:
+    - id: lane_1
+      direction: forward
+
+    - id: lane_2
+      direction: forward
+
+    - id: lane_3
+      direction: forward
+
+  traffic_direction: forward
+
+intersection:
+  present: true
+
+traffic_light:
+  present: true
+
+reference_points:
+  road_entry:
+    x: 640
+    y: 720
+
+  road_exit:
+    x: 640
+    y: 0
